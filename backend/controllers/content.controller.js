@@ -1,12 +1,6 @@
-import { useEffect, useState } from 'react';
-import About from '../components/About';
-import Amenities from '../components/Amenities';
-import Developer from '../components/Developer';
-import FAQ from '../components/FAQ';
-import FloorPlans from '../components/FloorPlans';
-import Hero from '../components/Hero';
+const Content = require('../models/Content.js');
 
-const mockData = {
+const defaultContent = {
   hero: {
     headingLine1: 'THINKING',
     headingLine2: 'OF A FANTASTIC VICINITY?',
@@ -124,55 +118,31 @@ const mockData = {
   },
 };
 
-const Home = () => {
-  const [content, setContent] = useState(mockData);
+exports.getContent = async (req, res) => {
+  try {
+    let content = await Content.findOne();
 
-  const fetchContent = async () => {
-    try {
-      const res = await fetch('http://localhost:3000/api/content');
-      const data = await res.json();
-      console.log(data);
-      if (data && data.hero) {
-        setContent(data);
-      }
-    } catch (err) {
-      console.error("Failed to fetch content:", err);
+    if (!content || !content.hero?.headingLine1 || !content.hero?.image) {
+      await Content.deleteMany({});
+      content = await Content.create(defaultContent);
     }
-  };
 
-  useEffect(() => {
-    fetchContent();
-  }, []);
-
-  return (
-    <main className="min-h-screen bg-white">
-      {content && <Hero data={content.hero} />}
-
-      {content && <About data={content.overview} />}
-
-      {content && <Amenities data={content.amenities} />}
-
-      {content && <FloorPlans data={content.floorPlans} />}
-
-      {content && <Developer data={content.developer} />}
-
-      {content && <FAQ data={content.faqs} />}
-
-      {/* Footer */}
-      <footer className="bg-brand-dark py-12 text-center">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col items-center">
-          <img
-            src="/vite.svg"
-            alt="Footer Logo"
-            className="h-12 mb-6 grayscale invert"
-          />
-          <p className="text-white/50 text-xs tracking-widest uppercase">
-            © 2026 Vighnaharta Developers | Designed for Excellence
-          </p>
-        </div>
-      </footer>
-    </main>
-  );
+    res.json(content);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
 
-export default Home;
+exports.updateContent = async (req, res) => {
+  try {
+    const updated = await Content.findOneAndUpdate(
+      {},
+      { $set: req.body },
+      { new: true },
+    );
+
+    res.json(updated);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

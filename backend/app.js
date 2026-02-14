@@ -1,10 +1,15 @@
-import express from 'express';
+const express = require('express');
+const cors = require('cors');
+
+const authRoutes = require('./routes/auth.routes.js');
+const contentRoutes = require('./routes/content.routes.js');
 
 const app = express();
 
-app.get("/hi" , (req,res)=>{
-    res.send("Test")
-})
+app.use(cors());
+app.use(express.json());
 
-// Export Only
-export default app;
+app.use('/api/auth', authRoutes);
+app.use('/api/content', contentRoutes);
+
+module.exports = app;
