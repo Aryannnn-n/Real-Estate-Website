@@ -27,14 +27,25 @@ const AdminLogin = () => {
 
       const data = res.data; // axios puts response data in .data
 
+      console.log('Login response:', data);
+
       if (data.success) {
+        console.log('Login successful, navigating...');
         localStorage.setItem('isAdmin', 'true');
-        navigate('/admin/dashboard');
+        setTimeout(() => {
+          navigate('/admin/dashboard', { replace: true });
+        }, 100);
       } else {
         alert('Invalid Credentials');
       }
     } catch (err) {
-      console.error(err);
+      console.error('Login error:', err);
+      if (err.response) {
+        console.error('Response data:', err.response.data);
+        alert(err.response.data.message || 'Login failed');
+      } else {
+        alert('Network error or server unreachable');
+      }
     }
   };
 

@@ -8,9 +8,13 @@ const app = express();
 
 app.use(cors({
   origin: '*', // Allow all origins for simplicity in this demo
-  credentials: true
 }));
 app.use(express.json());
+
+// Test Route For Vercel
+app.get("/" , (req,res)=>{
+  res.send("Working...")
+})
 
 app.use('/api/auth', authRoutes);
 app.use('/api/content', contentRoutes);
