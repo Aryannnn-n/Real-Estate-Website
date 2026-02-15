@@ -11,8 +11,5 @@
       "src": "/(.*)",
       "dest": "/api/index.js"
     }
-  ], 
-   "env": {
-    "MONGO_URI": "place_your_mongo_uri_here"
-  }
+  ]
 }

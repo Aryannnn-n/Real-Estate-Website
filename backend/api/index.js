@@ -6,8 +6,15 @@ let isConnected = false;
 
 const connectDB = async () => {
   if (isConnected) return;
+
+  const uri = process.env.MONGO_URI;
+  
+  if (!uri || uri === "place_your_mongo_uri_here") {
+    throw new Error("MONGO_URI is not defined or is still the placeholder.");
+  }
+
   try {
-    await mongoose.connect(process.env.MONGO_URI);
+    await mongoose.connect(uri);
     isConnected = true;
     console.log('MongoDB Connected via Serverless');
   } catch (err) {
