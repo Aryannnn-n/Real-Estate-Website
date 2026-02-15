@@ -12,10 +12,20 @@ const connectDB = async () => {
     console.log('MongoDB Connected via Serverless');
   } catch (err) {
     console.error('MongoDB connection error:', err);
+    throw err;
   }
 };
 
 module.exports = async (req, res) => {
-  await connectDB();
-  app(req, res);
+  try {
+    await connectDB();
+    app(req, res);
+  } catch (err) {
+    console.error('Failed to connect to DB:', err);
+    res.status(500).json({ 
+      error: 'Database connection failed', 
+      details: err.message,
+      hint: 'Check MONGO_URI environment variable' 
+    });
+  }
 };
