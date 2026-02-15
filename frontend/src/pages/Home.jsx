@@ -5,6 +5,7 @@ import Developer from '../components/Developer';
 import FAQ from '../components/FAQ';
 import FloorPlans from '../components/FloorPlans';
 import Hero from '../components/Hero';
+import API_URL from '../config';
 
 const mockData = {
   hero: {
@@ -35,7 +36,8 @@ const mockData = {
     title: 'About Project',
     description:
       'At Vighnaharta Enclave, every detail reflects the grandest gesture of life in the most authentic and desirable home. Guided by a humanist approach, the architecture places people at the heart of the space. Built on the foundations of comfort, it evokes a true sense of freedom, protection, and belonging.',
-    highlightQuote: 'The moment I entered the house, it felt welcomed — this feeling defines the privilege Vighnaharta Enclave offers.',
+    highlightQuote:
+      'The moment I entered the house, it felt welcomed — this feeling defines the privilege Vighnaharta Enclave offers.',
     buttonText: 'Download Brochure',
     images: ['/aboutmain.png', '/aboutpr2.png', '/aboutpr3.png'],
   },
@@ -52,10 +54,18 @@ const mockData = {
       { name: 'Jogging Track', icon: '🏃' },
     ],
     buildings: [
-        { name: "Vighnaharta Aaradhya", status: "Completed", image: "/completedbuilding.png" },
-        { name: "Vighnaharta Enclave", status: "Newly Launched", image: "/township.png" },
-        { name: "Vighnaharta Infinity", status: "Upcoming", image: "/hero.png" },
-    ]
+      {
+        name: 'Vighnaharta Aaradhya',
+        status: 'Completed',
+        image: '/completedbuilding.png',
+      },
+      {
+        name: 'Vighnaharta Enclave',
+        status: 'Newly Launched',
+        image: '/township.png',
+      },
+      { name: 'Vighnaharta Infinity', status: 'Upcoming', image: '/hero.png' },
+    ],
   },
 
   floorPlans: {
@@ -74,7 +84,7 @@ const mockData = {
         area: '580-611 RCA Sq.ft',
         price: 'Click for price',
       },
-       {
+      {
         name: '5,6 BHK',
         area: '1100-1400 RCA Sq.ft',
         price: 'Click for price',
@@ -85,7 +95,7 @@ const mockData = {
   developer: {
     title: 'About Developer',
     description:
-      'Vighnaharta Developers is more than just a real estate company — we are dream weavers, committed to building not just homes, but better lives. With a legacy of expert craftsmanship and a forward-thinking approach, we\'re transforming skylines and setting new standards in urban living.',
+      "Vighnaharta Developers is more than just a real estate company — we are dream weavers, committed to building not just homes, but better lives. With a legacy of expert craftsmanship and a forward-thinking approach, we're transforming skylines and setting new standards in urban living.",
     stats: [
       { label: 'Projects', value: '6' },
       { label: 'sq. ft. area developed', value: '1.32 LAC' },
@@ -94,7 +104,11 @@ const mockData = {
       { label: 'sq. ft. Area Upcoming', value: '2.7 LAC' },
     ],
     updates: [
-      { title: 'Under Construction', sub: 'Tower A', image: '/incompleteconstruction.png' },
+      {
+        title: 'Under Construction',
+        sub: 'Tower A',
+        image: '/incompleteconstruction.png',
+      },
       { title: 'Completed', sub: 'Tower B', image: '/completedbuilding.png' },
       { title: 'Completed', sub: 'Tower C', image: '/completedbuilding.png' },
     ],
@@ -104,22 +118,28 @@ const mockData = {
     title: 'Frequently Asked Questions',
     items: [
       {
-        question: 'What makes Swastik Group a trusted name in real estate in Vikhroli?',
+        question:
+          'What makes Swastik Group a trusted name in real estate in Vikhroli?',
         answer:
           'We deliver premium quality homes with transparency and long-term value.',
       },
       {
-        question: 'What types of residential projects does Swastik Group offer in Vikhroli?',
+        question:
+          'What types of residential projects does Swastik Group offer in Vikhroli?',
         answer: 'We offer smart 1BHK, premium 2BHK, and spacious 3BHK homes.',
       },
       {
-        question: 'Why should I invest in Swastik Group\'s new projects in Vikhroli?',
-        answer: 'Vikhroli is a prime location with great connectivity and appreciation potential.',
+        question:
+          "Why should I invest in Swastik Group's new projects in Vikhroli?",
+        answer:
+          'Vikhroli is a prime location with great connectivity and appreciation potential.',
       },
       {
-        question: 'How does Swastik Group ensure quality and sustainability in its real estate projects?',
-        answer: 'We use eco-friendly materials and modern construction techniques.',
-      }
+        question:
+          'How does Swastik Group ensure quality and sustainability in its real estate projects?',
+        answer:
+          'We use eco-friendly materials and modern construction techniques.',
+      },
     ],
   },
 };
@@ -129,14 +149,13 @@ const Home = () => {
 
   const fetchContent = async () => {
     try {
-      const res = await fetch('http://localhost:3000/api/content');
+      const res = await fetch(`${API_URL}/api/content`);
       const data = await res.json();
-      console.log(data);
       if (data && data.hero) {
         setContent(data);
       }
     } catch (err) {
-      console.error("Failed to fetch content:", err);
+      console.error('Failed to fetch content:', err);
     }
   };
 

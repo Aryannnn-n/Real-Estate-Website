@@ -1,5 +1,7 @@
+import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import API_URL from '../config';
 
 const AdminLogin = () => {
   const [form, setForm] = useState({
@@ -17,15 +19,13 @@ const AdminLogin = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch('http://localhost:3000/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(form),
+      const { email, password } = form; // Destructure email and password
+      const res = await axios.post(`${API_URL}/api/auth/login`, { // Changed to axios.post
+        email,
+        password,
       });
 
-      const data = await res.json();
+      const data = res.data; // axios puts response data in .data
 
       if (data.success) {
         localStorage.setItem('isAdmin', 'true');
