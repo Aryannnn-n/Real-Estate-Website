@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import API_URL from '../../config';
 
 const FloorPlansEditor = ({ content, refresh }) => {
   const [form, setForm] = useState({ title: '', wings: [], types: [] });
